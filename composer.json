@@ -1,0 +1,32 @@
+{
+  "name": "abacaphiliac/php-couchbase-performance",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Timothy Younger",
+      "email": "abacaphiliac@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-couchbase": "*",
+    "roave/security-advisories": "dev-master",
+    "beberlei/assert": "*",
+    "corneltek/getoptionkit": "*",
+    "ramsey/uuid": "*",
+    "igorw/get-in": "^1.0",
+    "zendframework/zend-stdlib": "^3.1"
+  },
+  "scripts": {
+    "test:couchbase": "parallel -j5 --halt now,fail=1 --joblog job.log php bin/test-couchbase.php ::: $(echo {1..5}) 2> err.log"
+  },
+  "autoload": {
+    "psr-4": {
+      "Abacaphiliac\\PhpCouchbasePerformance\\": "src"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7"
+  }
+}
