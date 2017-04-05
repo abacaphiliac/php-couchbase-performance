@@ -3,19 +3,27 @@
 namespace Abacaphiliac\PhpCouchbasePerformance;
 
 use Assert\Assertion;
+use Zend\Stdlib\AbstractOptions;
 
-class Options
+class Options extends AbstractOptions
 {
     /** @var string */
     private $couchbaseDsn = 'couchbase://localhost';
+    
     /** @var string */
     private $couchbaseBucket = 'default';
+    
     /** @var int */
     private $insertCount = 1;
+    
     /** @var int */
     private $fetchPerInsert = 1;
+    
     /** @var int|null */
     private $ttl = null;
+    
+    /** @var array[] */
+    private $memcacheServers = [];
     
     /**
      * @param string[] $files
@@ -135,5 +143,41 @@ class Options
         Assertion::nullOrIntegerish($ttl);
         
         $this->ttl = $ttl;
+    }
+    
+    /**
+     * @return array[]
+     */
+    public function getMemcacheServers()
+    {
+        return $this->memcacheServers;
+    }
+    
+    /**
+     * @param string $memcacheServers
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    public function setMemcacheServers($memcacheServers)
+    {
+        Assertion::string($memcacheServers);
+    
+        $hostPortPairs = array_map('trim', explode(',', $memcacheServers));
+        Assertion::greaterOrEqualThan(count($hostPortPairs), 1);
+        
+        $servers = [];
+        foreach ($hostPortPairs as $hostPortPair) {
+            $server = array_map('trim', explode(':', $hostPortPair));
+            
+            Assertion::keyExists($server, 0);
+            Assertion::string($server[0]);
+            
+            Assertion::keyExists($server, 1);
+            Assertion::integerish($server[1]);
+            
+            $servers[] = $server;
+        }
+        
+        $this->memcacheServers = $servers;
     }
 }

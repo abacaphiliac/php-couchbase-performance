@@ -35,6 +35,8 @@ class Couchbase implements AdapterInterface
     
         Assertion::propertyExists($result, 'value');
         Assertion::eq($result->value, $key);
+        
+        return $result->value;
     }
     
     /**

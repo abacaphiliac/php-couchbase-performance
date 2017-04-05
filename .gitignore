@@ -1,4 +1,4 @@
-tests/config.php
+config/config.php
+data/
 vendor/
 composer.lock
-job.log

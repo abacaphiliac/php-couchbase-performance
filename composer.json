@@ -11,6 +11,8 @@
   ],
   "require": {
     "ext-couchbase": "*",
+    "ext-memcache": "*",
+    "ext-memcached": "*",
     "roave/security-advisories": "dev-master",
     "beberlei/assert": "*",
     "corneltek/getoptionkit": "*",
@@ -19,7 +21,9 @@
     "zendframework/zend-stdlib": "^3.1"
   },
   "scripts": {
-    "test:couchbase": "parallel -j5 --halt now,fail=1 --joblog job.log php bin/test-couchbase.php ::: $(echo {1..5}) 2> err.log"
+    "test:couchbase": "parallel -j500 --halt now,fail=1 --joblog data/log/$(date +%Y%m%d.%H%M%S).job.log php bin/test-couchbase.php ::: $(echo {1..500}) 2> data/log/$(date +%Y%m%d.%H%M%S).err.log",
+    "test:memcache": "parallel -j500 --halt now,fail=1 --joblog data/log/$(date +%Y%m%d.%H%M%S).job.log php bin/test-memcache.php ::: $(echo {1..500}) 2> data/log/$(date +%Y%m%d.%H%M%S).err.log",
+    "test:memcached": "parallel -j500 --halt now,fail=1 --joblog data/log/$(date +%Y%m%d.%H%M%S).job.log php bin/test-memcached.php ::: $(echo {1..500}) 2> data/log/$(date +%Y%m%d.%H%M%S).err.log"
   },
   "autoload": {
     "psr-4": {

@@ -7,7 +7,7 @@ $options = \Abacaphiliac\PhpCouchbasePerformance\Options::fromFiles([
     __DIR__ . '/../config/config.dist.php'
 ]);
 
-$adapter = new \Abacaphiliac\PhpCouchbasePerformance\Adapter\Couchbase($options);
+$adapter = new \Abacaphiliac\PhpCouchbasePerformance\Adapter\Memcache($options);
 
 \Assert\Assertion::isArray($argv);
 \Assert\Assertion::keyExists($argv, 1);
